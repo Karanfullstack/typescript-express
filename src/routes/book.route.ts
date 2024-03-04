@@ -4,15 +4,22 @@ import { BookRequestPayload } from "../request/book.req";
 
 const BookRouter = Router();
 
-BookRouter.get("/find", (req: Request, res: Response) => {
-	res.json(BookService.findAllBooks());
+BookRouter.get("/find", async (req: Request, res: Response) => {
+	res.json(await BookService.findAllBooks());
 });
-BookRouter.post("/add", (req: Request, res: Response) => {
-	res.json(BookService.addBook(req.body as BookRequestPayload));
+BookRouter.post("/add", async (req: Request, res: Response) => {
+	res.json(await BookService.addBook(req.body as BookRequestPayload));
 });
 
-BookRouter.get("/find/:id", (req: Request, res: Response) => {
-	res.json(BookService.findBookById(parseInt(req.params.id)));
+BookRouter.get("/find/:id", async (req: Request, res: Response) => {
+	res.json(await BookService.findBookById(parseInt(req.params.id)));
 });
+
+BookRouter.delete("/delete/:id", async(req: Request, res: Response)=>{
+	  res.json(await BookService.deleteBook(parseInt(req.params.id)))
+})
+BookRouter.put("/update/:id", async(req: Request, res: Response)=>{
+	res.json(await BookService.updateBook(parseInt(req.params.id), req.body as	BookRequestPayload))
+})
 
 export default BookRouter;

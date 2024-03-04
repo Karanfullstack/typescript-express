@@ -3,5 +3,4 @@ export interface BookRequestPayload {
 	authorName: string;
 	sp: number;
 	pp: number;
-	bookId: number;
 }

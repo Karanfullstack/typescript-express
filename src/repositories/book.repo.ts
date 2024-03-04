@@ -1,30 +1,24 @@
+import AppDataSource from "../db/db.config";
 import { BookEntity } from "../entities/book.entity";
 
 export default class BookRepo {
 	public static data: BookEntity[] = [];
 
 	public static findAll() {
-		return this.data;
+		return AppDataSource.getRepository(BookEntity).find();
 	}
 
 	public static findById(id: number) {
-		return this.data.filter((book) => book.id === id)[0];
+		return AppDataSource.getRepository(BookEntity).findOne({ where: { id } });
 	}
 
 	public static deleteById(id: number) {
-		return this.data.filter((book) => book.id !== id);
+		return AppDataSource.getRepository(BookEntity).delete(id);
 	}
-
 	public static add(book: BookEntity) {
-		this.data.push(book);
+		return AppDataSource.getRepository(BookEntity).save(book);
 	}
 	public static updateById(id: number, book: BookEntity) {
-		// update book
-		this.data = this.data.map((item) => {
-			if (item.id === id) {
-				return book;
-			}
-			return item;
-		});
+		return AppDataSource.getRepository(BookEntity).update(id, book);
 	}
 }
